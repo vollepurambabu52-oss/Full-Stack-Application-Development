@@ -1,0 +1,19 @@
+START TRANSACTION;
+
+-- Check balance before deduction
+SELECT balance INTO @bal FROM Accounts WHERE account_id = 1;
+
+-- Condition check
+IF @bal < 2000 THEN
+    ROLLBACK;
+ELSE
+    UPDATE Accounts
+    SET balance = balance - 2000
+    WHERE account_id = 1;
+
+    UPDATE Accounts
+    SET balance = balance + 2000
+    WHERE account_id = 2;
+
+    COMMIT;
+END IF;
