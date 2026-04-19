@@ -1,0 +1,17 @@
+@RestController
+@RequestMapping("/products")
+public class ProductController {
+
+    @Autowired
+    private ProductRepository repo;
+
+    @GetMapping("/{id}")
+    public Product getProduct(@PathVariable Long id) {
+        return repo.findById(id).orElseThrow();
+    }
+
+    @PostMapping
+    public Product create(@RequestBody Product product) {
+        return repo.save(product);
+    }
+}
